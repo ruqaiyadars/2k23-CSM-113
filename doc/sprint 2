@@ -1,0 +1,107 @@
+SPRINT_2.md
+Sprint 2 – 
+1. Sprint Goal & Scope
+Build a secure catalog database to manage categories, products, variants, and SKUs. This sprint focuses on CRUD operations, data integrity, authentication, and testing.
+
+2. Sprint 1 Reuse
+•	Frontend: React.js
+•	Backend: Node.js + Express.js
+•	Database: MySQL
+•	Authentication: JWT
+•	Existing Users table reused.
+
+3. Updated ER Diagram
+Er Diagram
+CATEGORY ||--o{ PRODUCT : contains
+PRODUCT ||--o{ VARIANT : has
+VARIANT ||--o{ SKU : materializes
+PRODUCT ||--o{ ASSET : displays
+PRODUCT ||--o{ CART_ITEM : selected
+SKU ||--o{ ORDER_ITEM : sold
+
+4. Data Dictionary
+Table	Main Fields
+Category	id, name, slug, parent_ id, status
+Product	id, category _id, name, slug, description, status
+Variant	id, product _id, option _value
+SKU	id, variant_ id,  sku_ code, price, stock, status
+Asset	id, product_ id, image_ url,  alt_ text
+Specification	id, product _id, specifications
+
+5. API Routes
+Method	Route	Purpose
+POST	 /api/v1/admin/products	Create Product
+PATCH	/api/v1/admin/products/	Update Product
+POST	/api/v1/admin/products//skus	 Add SKU
+PATCH	/api/v1/admin/skus/	Update SKU
+GET	/api/v1/admin/products	View Products
+POST	/api/v1/admin/categories	Create Category
+GET	/api/v1/admin/categories	View Categories
+________________________________________
+6. Example Request
+POST /api/v1/admin/products
+
+{
+"name": "Laptop",
+"slug": "laptop",
+"category_id":1,
+"status": "Draft"
+}
+Response
+{
+"message": "Product created successfully"
+}
+
+7. Business Rule
+•	SKU code must be unique.
+•	Product slug must be unique.
+•	Stock cannot be negative.
+•	Only Admin can add or edit products.
+•	Categories cannot become their own parent.
+8. Seed Data
+Categorie 
+ Electronics , Fashion
+Products
+•	Laptop
+•	Smartphone
+•	T-Shirt
+SKUs
+•	LTP001
+•	LTP002
+•	PHN001
+•	TSH001
+
+9. Demonstration
+1.	Create Category.
+2.	Create Product.
+3.	Add Variant.
+4.	Add SKU.
+5.	View Products using API.
+
+10. Testing
+Test Cases:
+•	Product creation 
+•	Duplicate slug rejected 
+•	Duplicate SKU rejected 
+•	Negative stock rejected 
+•	Unauthorized access rejected 
+Command:
+npm test
+
+
+
+11. Known Limitations
+•	No payment integration.
+•	No checkout.
+•	No public product search.
+•	No image upload.
+
+12. Sprint 3 Backlog
+•	Shopping Cart
+•	Checkout
+•	Payment Gateway
+•	Product Search
+•	Product Images
+•	Order Management
+Conclusion
+Sprint 2 successfully creates the catalog database foundation with secure CRUD operations, data validation, authentication, and testing for future Sprint 3 development.
